@@ -1,6 +1,6 @@
 # errchain
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/electrofocus/chain.svg)](https://pkg.go.dev/github.com/electrofocus/chain)
+[![Go Reference](https://pkg.go.dev/badge/github.com/electrofocus/errchain.svg)](https://pkg.go.dev/github.com/electrofocus/errchain)
 
 ## About
 
@@ -13,7 +13,7 @@ This package uses [module version numbering](https://go.dev/doc/modules/version-
 With a [correctly configured](https://golang.org/doc/install#testing) Go toolchain run:
 
 ```
-go get github.com/electrofocus/chain
+go get github.com/electrofocus/errchain
 ```
 
 ## Example
@@ -30,13 +30,13 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/electrofocus/chain"
+	"github.com/electrofocus/errchain"
 )
 
 func main() {
 	var (
 		myErr = errors.New("my err")
-		err   = chain.New(myErr, io.EOF, os.ErrClosed, http.ErrHijacked)
+		err   = errchain.New(myErr, io.EOF, os.ErrClosed, http.ErrHijacked)
 	)
 
 	if errors.Is(err, io.EOF) {
@@ -61,4 +61,4 @@ func main() {
 }
 ```
 
-Open above example in [The Go Playground](https://go.dev/play/p/DBxHqF85Ubp).
+Open above example in [The Go Playground](https://go.dev/play/p/yfPyoY_yVPi).
