@@ -1,8 +1,10 @@
 package errchain_test
 
 import (
+	"encoding/json"
 	"errors"
 	"io"
+	"io/fs"
 	"net/http"
 	"os"
 	"testing"
@@ -99,5 +101,45 @@ func TestIs(t *testing.T) {
 		}
 
 		t.Fatalf("unexpected result TRUE for error %s and %s", err, e)
+	}
+}
+
+type customErr struct {
+	text string
+}
+
+func (e customErr) Error() string {
+	return e.text
+}
+
+func TestAs(t *testing.T) {
+
+	err := errchain.New(
+		customErr{"first error text"},
+		&fs.PathError{Op: "readdir", Path: "home", Err: errors.New("not implemented")},
+		&json.SyntaxError{},
+	)
+
+	var (
+		err1 customErr
+		err2 *fs.PathError
+		err3 *json.SyntaxError
+		err4 *json.MarshalerError
+	)
+
+	if !errors.As(err, &err1) {
+		t.Fatalf("unexpected result FALSE for error %s and error type %T", err, err1)
+	}
+
+	if !errors.As(err, &err2) {
+		t.Fatalf("unexpected result FALSE for error %s and error type %T", err, err2)
+	}
+
+	if !errors.As(err, &err3) {
+		t.Fatalf("unexpected result FALSE for error %s and error type %T", err, err3)
+	}
+
+	if errors.As(err, &err4) {
+		t.Fatalf("unexpected result TRUE for error %s and error type %T", err, err4)
 	}
 }
