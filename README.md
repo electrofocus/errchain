@@ -16,9 +16,9 @@ With a [correctly configured](https://golang.org/doc/install#testing) Go toolcha
 go get github.com/electrofocus/errchain
 ```
 
-## Example
+## Examples
 
-Let's build new error from multiple errors:
+Let's build new error from multiple errors and examine it with `errors.Is`:
 
 ```go
 package main
