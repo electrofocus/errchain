@@ -4,7 +4,7 @@
 
 ## About
 
-Here's [Go](https://go.dev) package for wrapping, chaining or combining multiple errors for further use with the standard `errors.Is`. You can learn more about working with errors in Go in [this](https://go.dev/blog/go1.13-errors) article. Explore the [example](#example) below for more understanding.
+Here's [Go](https://go.dev) package for errors chaining for further examining using the standard `errors.Is`. You can learn more about working with errors in Go in [this](https://go.dev/blog/go1.13-errors) article. Explore the [example](#example) below for more understanding.
 
 This package uses [module version numbering](https://go.dev/doc/modules/version-numbers).
 
