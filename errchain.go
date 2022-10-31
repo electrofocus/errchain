@@ -46,3 +46,9 @@ func (c chain) Error() string {
 func (c chain) Is(target error) bool {
 	return errors.Is(c.error, target) || errors.Is(c.next, target)
 }
+
+// As finds the first error in chain that matches target, and if one is found, sets
+// target to that error value and returns true. Otherwise, it returns false.
+func (c chain) As(target any) bool {
+	return errors.As(c.error, target) || errors.As(c.next, target)
+}
