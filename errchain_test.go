@@ -62,7 +62,7 @@ func TestNewAndError(t *testing.T) {
 			}
 
 			if text := err.Error(); text != c.expectedText {
-				t.Fatalf("wrong error text: expected %q; got %q", c.expectedText, text)
+				t.Fatalf("wrong error text: expected %q, but got %q", c.expectedText, text)
 			}
 		})
 	}
@@ -92,7 +92,7 @@ func TestIs(t *testing.T) {
 			continue
 		}
 
-		t.Fatalf("unexpected result FALSE for error %s and %s", err, e)
+		t.Fatalf("unexpected result FALSE for error (%s) and (%s)", err, e)
 	}
 
 	for _, e := range unexpectedErrs {
@@ -100,7 +100,7 @@ func TestIs(t *testing.T) {
 			continue
 		}
 
-		t.Fatalf("unexpected result TRUE for error %s and %s", err, e)
+		t.Fatalf("unexpected result TRUE for error (%s) and (%s)", err, e)
 	}
 }
 
@@ -128,18 +128,18 @@ func TestAs(t *testing.T) {
 	)
 
 	if !errors.As(err, &err1) {
-		t.Fatalf("unexpected result FALSE for error %s and error type %T", err, err1)
+		t.Fatalf("unexpected result FALSE for error (%s) and error type %T", err, err1)
 	}
 
 	if !errors.As(err, &err2) {
-		t.Fatalf("unexpected result FALSE for error %s and error type %T", err, err2)
+		t.Fatalf("unexpected result FALSE for error (%s) and error type %T", err, err2)
 	}
 
 	if !errors.As(err, &err3) {
-		t.Fatalf("unexpected result FALSE for error %s and error type %T", err, err3)
+		t.Fatalf("unexpected result FALSE for error (%s) and error type %T", err, err3)
 	}
 
 	if errors.As(err, &err4) {
-		t.Fatalf("unexpected result TRUE for error %s and error type %T", err, err4)
+		t.Fatalf("unexpected result TRUE for error (%s) and error type %T", err, err4)
 	}
 }
