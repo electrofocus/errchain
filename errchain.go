@@ -2,6 +2,8 @@ package errchain
 
 import "errors"
 
+// chain is the central entity of the package.
+// It holds an error and 'link' to next error in chain.Upda
 type chain struct {
 	error
 
@@ -25,7 +27,7 @@ func New(errs ...error) error {
 	}
 }
 
-// Error returns string with concatenated underlying errors strings, separated by "; ".
+// Error returns string with concatenated underlying errors strings, nested in "(" and ")".
 func (c chain) Error() string {
 	if c.error == nil && c.next == nil {
 		return ""
@@ -42,7 +44,7 @@ func (c chain) Error() string {
 	return c.error.Error() + " (" + c.next.Error() + ")"
 }
 
-// Is allows to check the chain for compliance with any error.
+// Is allows to examine the chain for compliance with any error.
 func (c chain) Is(target error) bool {
 	return errors.Is(c.error, target) || errors.Is(c.next, target)
 }
