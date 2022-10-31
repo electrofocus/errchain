@@ -39,7 +39,7 @@ func (c chain) Error() string {
 		return c.error.Error()
 	}
 
-	return c.error.Error() + "; " + c.next.Error()
+	return c.error.Error() + " (" + c.next.Error() + ")"
 }
 
 // Is allows to check the chain for compliance with any error.

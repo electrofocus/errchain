@@ -37,7 +37,7 @@ func TestNewAndError(t *testing.T) {
 				errors.New("3"),
 			},
 			expectNil:    false,
-			expectedText: "1; 2; 3",
+			expectedText: "1 (2 (3))",
 		},
 		{
 			name:         "one err",
