@@ -70,8 +70,9 @@ func TestNewAndError(t *testing.T) {
 
 func TestIs(t *testing.T) {
 	var (
-		myErr = errors.New("my err")
-		errs  = []error{
+		myErr        = errors.New("my err")
+		expectedErrs = []error{
+			errchain.New(errchain.New(errors.New("nested one"))),
 			myErr,
 			io.EOF,
 			os.ErrClosed,
@@ -85,22 +86,30 @@ func TestIs(t *testing.T) {
 		}
 	)
 
-	err := errchain.New(errs...)
+	chain := errchain.New(expectedErrs...)
 
-	for _, e := range errs {
-		if errors.Is(err, e) {
+	for _, e := range expectedErrs {
+		if errors.Is(chain, e) {
 			continue
 		}
 
-		t.Fatalf("unexpected result FALSE for error (%s) and (%s)", err, e)
+		t.Fatalf("unexpected result FALSE for error chain (%s) and (%s)", chain, e)
 	}
 
 	for _, e := range unexpectedErrs {
-		if !errors.Is(err, e) {
+		if !errors.Is(chain, e) {
 			continue
 		}
 
-		t.Fatalf("unexpected result TRUE for error (%s) and (%s)", err, e)
+		t.Fatalf("unexpected result TRUE for error chain (%s) and (%s)", chain, e)
+	}
+
+	if !errors.Is(chain, io.EOF) {
+		t.Fatalf("unexpected result FALSE for error chain (%s) and (%s)", chain, io.EOF)
+	}
+
+	if errors.Is(chain, io.ErrClosedPipe) {
+		t.Fatalf("unexpected result TRUE for error chain (%s) and (%s)", chain, io.ErrClosedPipe)
 	}
 }
 
