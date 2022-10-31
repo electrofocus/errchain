@@ -18,6 +18,7 @@ go get github.com/electrofocus/errchain
 
 ## Examples
 
+### Chain and examine
 Let's build new error from multiple errors and examine it with `errors.Is`:
 
 ```go
@@ -62,3 +63,59 @@ func main() {
 ```
 
 Open above example in [The Go Playground](https://go.dev/play/p/yfPyoY_yVPi).
+
+### Check error for compliance with one of expected errors
+Moreover, non-obvious potential of `errchain` package is the ability to examine an error for compliance with one of expected ones.
+
+Let's declare a toy function, as a result of which we expect an error (in fact, it will always return `io.EOF`):
+```go
+import "encoding/json"
+
+func toy() error {
+	return io.EOF
+}
+```
+
+Sometimes you expect several different errors. In this case, to recognize the returned error, you need to do something like this:
+```go
+import (
+	"errors"
+	"fmt"
+	"net/http"
+	"os"
+)
+
+func main() {
+	if err := toy(); err != nil &&
+		(errors.Is(err, os.ErrClosed) ||
+			errors.Is(err, io.EOF) ||
+			errors.Is(err, http.ErrHijacked)) {
+
+		fmt.Printf("got one of expected errors: %q\n", err)
+	}
+}
+```
+
+An equivalent check can be performed using `errors.Is` and `errchain` package's `New` functions, but in more concise and convinient way:
+```go
+import (
+	"errors"
+	"fmt"
+	"net/http"
+	"os"
+	
+	"github.com/electrofocus/errchain"
+)
+
+func main() {
+	if err := toy(); errors.Is(errchain.New(
+		os.ErrClosed,
+		io.EOF,
+		http.ErrHijacked,
+	), err) {
+		fmt.Printf("got one of expected errors: %q\n", err)
+	}
+}
+```
+
+Play with above example in [The Go Playground](https://go.dev/play/p/LwaRS9gB1Bn).
