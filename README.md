@@ -65,7 +65,7 @@ func main() {
 Open above example in [The Go Playground](https://go.dev/play/p/yfPyoY_yVPi).
 
 ### Check error for compliance with one of expected errors
-Moreover, the non-obvious potential of the package is the ability to examine an error for compliance with one of expected ones.
+Moreover, non-obvious potential of `errchain` package is the ability to examine an error for compliance with one of expected ones.
 
 Let's declare a toy function, as a result of which we expect an error (in fact, it will always return `io.EOF`):
 ```go
