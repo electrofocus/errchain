@@ -1,6 +1,6 @@
 # errchain
 
-❗️ This package is no longer needed if you are using version Go >= 1.20, since [in 1.20 standard errors package was expanded](https://go.dev/doc/go1.20#errors) by adding [`Join`](https://pkg.go.dev/errors#Join) method, which provides functionality similar to that provided by errchain package.
+❗️ This package is no longer needed if you are using Go version >= 1.20, since [in 1.20 standard errors package was extended](https://go.dev/doc/go1.20#errors) by adding [`Join`](https://pkg.go.dev/errors#Join) method, which provides functionality similar to that provided by errchain package.
 
 [![Go Reference](https://pkg.go.dev/badge/github.com/electrofocus/errchain.svg)](https://pkg.go.dev/github.com/electrofocus/errchain)
 
